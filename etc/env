@@ -4,5 +4,6 @@ for A in $($BB --list) ; do
   alias $A="busybox $A"
 done
 
+# You can use MSYSROOT here for much flexibility (e.g. MSYSROOT/..)
 export PATH="/usr/bin:$PATH"
 
