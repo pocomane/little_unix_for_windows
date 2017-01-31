@@ -1,6 +1,8 @@
 :
 @echo off
 set MSYS=winsymlinks:nativestrict
-set PATH=/usr/bin;%PATH%
-cd %~dp0
+set MSYSROOT=%~dp0
+set ENV=/etc/env
+cd %MSYSROOT%
 start usr\bin\mintty.exe usr/bin/busybox.exe ash %*
+
