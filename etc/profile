@@ -1,7 +1,7 @@
 
 BB='/usr/bin/busybox.exe'
 for A in $($BB --list) ; do
-  alias $A="busybox $A"
+  alias $A="$BB $A"
 done
 
 # You can use MSYSROOT here for much flexibility (e.g. MSYSROOT/..)
