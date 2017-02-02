@@ -112,6 +112,21 @@ there must be no carriage return. If your editor can not save in this
 format, use the dos2unix utility (type dos2unix --help in the interactive
 console) before running the script.
 
+Adding other MSYS utilities
+---------------------------
+
+Theoretically you can copy any MSYS utility in the /usr/bin folder and it
+will be ready to be used. However some utility may depend on specific
+configuration files or shared library. You have to copy all of them: the
+configuration under the same folder hierarchy and the shared library in the
+/usr/bin folder.
+
+If you want copy some utility that have the same name of one supplied by
+busybox (e.g. grep), you can simply overwrite the link in the /usr/bin
+directory. In case you have to re-run the bblink script as described in the
+installation section, there should be no problems since it can detect if a
+file is a link or a binary.
+
 Starup speed troubleshoot
 -------------------------
 
