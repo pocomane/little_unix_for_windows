@@ -13,12 +13,13 @@ if [ "$ACTION" == "create" ] ; then
   for A in $("$DD/$BB" --list) ; do
     if [ ! -x "$A" ] ; then
       "$DD/$BB" ln -s "$BB" "$A"
+      "$DD/$BB" printf .
     fi
   done
 fi
 
 if [ "$ACTION" == "remove" ] ; then
-  for A in $(ls) ; do
+  for A in $("$DD/$BB" ls) ; do
     if [ ! "$A" == "$BB" ] ; then
 
       TOREMOVE="false"
@@ -30,10 +31,13 @@ if [ "$ACTION" == "remove" ] ; then
 
       if [ "$TOREMOVE" == "true" ] ; then
         "$DD/$BB" rm "$A"
+        "$DD/$BB" printf .
       fi
     fi
   done
 fi
+
+"$DD/$BB" printf "\n"
 
 # During the removal, the following files should be kept:
 # bblink.sh                  mintty.exe                 msys-2.0.dll

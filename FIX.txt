@@ -1,0 +1,13 @@
+
+In some cases windows does not copy (or extract) correctly the links, and this
+can give some trouble (e.g. 'ls' command do not actually list anything).
+However there is a fix: regenerate all the links. You need to open terminal.bat
+with admin rights and issue the following commands:
+
+bblink.sh -r
+bblink.sh
+
+Note that the installation is fully portable, so you can change the directory
+name, or move somewhere else. But if you duplicate the folder, this issue
+could arise again.
+
