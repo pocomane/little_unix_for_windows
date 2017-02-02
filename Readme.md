@@ -64,14 +64,19 @@ links in winsows) and run the following command:
 
 > bblink.sh
 
-When it ends, close the admin terminal, you are done. Note that some system
-(e.g. windows 7) have issues copyng or archiving/extracting the symbolic
-link. In any moment you can refresh them with
+When it ends, close the admin terminal, you are done.
+
+Note that in some cases windows does not copyng (or extract) correctly the
+symbolic link. It could just duplicate the original file resulting in a larger
+directory size (i.e. ~ 100 Mb vs ~ 5 Mb of a regular one). Or it can generate
+other type of links, that will prevent some utilities to work work properly
+(e.g.  "ls" could not list anything). In any moment you can correct all this
+issues with
 
 > bblink.sh -r
 > bblink.sh
 
-(The first just delete all the links or wrong generated file copies)
+The first just delete all the links or wrong generated file copies.
 
 Use the interactive shell/terminal
 ----------------------------------
