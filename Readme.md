@@ -53,41 +53,64 @@ separately on the web.
 If there is no busybox executable in your MSYS distribution, please install it with
 "pacman -Su busybox".
 
-Finally, you need to copy all the content of this repository into the
+After that, you need to copy all the content of this repository into the
 little_unix_for_windows folder (if you want you can skip or delete this
 Readme). You have to keep the subfolder structure, e.g. eventually you get the
 file little_unix_for_windows/etc/env .
+
+Finally, you have to generate the links.  Right-click on terminal.bat and
+chose "Run as administrator" (that rights are needed to create symbolic
+links in winsows) and run the following command:
+
+> bblink.sh
+
+When it ends, close the admin terminal, you are done. Note that some system
+(e.g. windows 7) have issues copyng or archiving/extracting the symbolic
+link. In any moment you can refresh them with
+
+> bblink.sh -r
+> bblink.sh
+
+(The first just delete all the links or wrong generated file copies)
 
 Use the interactive shell/terminal
 ----------------------------------
 
 You can use the interactive terminal (mintty) / shell (busybox ash) double
 clicking on teminal.bat in the root directory. Here you can use more or
-less all the typical unix commands (ls, set, etc). They are embended
-inside the busybox executable so you can not discover them by listing
-into some directory or tryign to tab-completate the command line. Use
-the busybox command without argument to get a list of avaiable "Applets".
+less all the typical unix commands (ls, set, etc). There is no manual
+but minimal help can be found with (e.g. for the "ls" command)
 
-If you wnt run a unix shell script, just write
+> busybox help ls
+> ls --help
 
-ash path/to/my_script.sh
+If you want to run a sub-shell script, just write:
 
-In the terminal. Alternatively you can run through the terminal.bat 
-utility simply passing your script path as argument. You can do this,
-for example, dragging your script on terminal.bat. However, in that way,
-the terminal will be closed just after the script finish; if you want to
+> ash -l
+
+Or if you want to open another terminal windows:
+
+> mintty ash -l &
+
+Or to run a script:
+
+> ./my_script.sh
+
+This will run the scipt in the terminal. Alternatively you can run through the
+terminal.bat utility simply passing your script path as argument. You can do
+this, for example, dragging your script on terminal.bat. However, in that
+way, the terminal will be closed just after the script finish; if you want to
 keep it open, end your script with something like
 
+```
 echo press enter to exit
 read
+```
 
 Please note that the script must be a plain unix-style ASCII file i.e.
 there must be no carriage return. If your editor can not save in this
 format, use the dos2unix utility (type dos2unix --help in the interactive
 console) before running the script.
-
-TODO : Enable support for carriage return script !!! Is there a busybox
-compilation option for this ???
 
 Starup speed troubleshoot
 -------------------------
