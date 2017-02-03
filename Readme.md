@@ -65,9 +65,15 @@ When it ends, close the admin terminal, you are done.
 Distribution
 ------------
 
-If you want to make a binary package, you can remove the .git folder the
-.gitignore file and this Readme.md. I suggest you to keep the FIX.txt file or
-integreate it in a your own Readme file.
+If you want to make a binary package, you can remove:
+
+- .git folder
+- .gitignore file
+- .gitattributes file
+- this Readme.md file
+
+It is not mandatory, but I suggest you to keep the FIX.txt file or
+to integreate it in a your own Readme file.
 
 Note that in some cases windows does not copyng (or extract) correctly the
 symbolic link. It could just duplicate the original file resulting in a larger

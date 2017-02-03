@@ -1,0 +1,4 @@
+* text=auto
+*.cmd eol=crlf
+*.sh eol=lf
+/etc/* eol=lf
