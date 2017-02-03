@@ -52,42 +52,18 @@ installed by default. You can download and install it with
 - usr/bin/mkgroup.exe
 - usr/bin/busybox.exe
 
-Then, you have to generate the busybox links.  Right-click on terminal.bat and
-chose "Run as administrator" (that rights are needed to create symbolic
+Then you need to generate some utility file with Right-click on terminal.bat
+and chose "Run as administrator" (that rights are needed to create symbolic
 links in winsows) and run the following command:
 
 ```
-> bblink.sh
+> dofix.sh add
 ```
 
-When it ends, close the admin terminal, you are done.
-
-Distribution
-------------
-
-If you want to make a binary package, you can remove:
-
-- .git folder
-- .gitignore file
-- .gitattributes file
-- this Readme.md file
-
-It is not mandatory, but I suggest you to keep the FIX.txt file or
-to integreate it in a your own Readme file.
-
-Note that in some cases windows does not copyng (or extract) correctly the
-symbolic link. It could just duplicate the original file resulting in a larger
-directory size (i.e. ~ 100 Mb vs ~ 5 Mb of a regular one). Or it can generate
-other type of links, that will prevent some utilities to work work properly
-(e.g.  "ls" could not list anything). In any moment you can correct all this
-issues with
-
-```
-> bblink.sh -r
-> bblink.sh
-```
-
-The first just delete all the links or wrong generated file copies.
+When it ends, close the admin terminal, you are done. The result folder is
+fully "portable" i.e. it do not depend on extern file, directory names, or
+regitry keys. However there are a couple of issue, described in the
+"Distribution" section.
 
 Use the interactive shell/terminal
 ----------------------------------
@@ -136,6 +112,47 @@ there must be no carriage return. If your editor can not save in this
 format, use the dos2unix utility (type dos2unix --help in the interactive
 console) before running the script.
 
+Distribution
+------------
+
+If you want to make a binary package, you can remove:
+
+- .git folder
+- .gitignore file
+- .gitattributes file
+- this Readme.md file
+
+It is not mandatory, but I suggest you to keep the FIX.txt file or
+to integreate it in a your own Readme file.
+
+However there are couple of issue both packing or moving the directory.
+
+First, in some cases windows does not copyng (or extract) correctly the
+symbolic link. It could just duplicate the original file resulting in a larger
+directory size (i.e. ~ 100 Mb vs ~ 5 Mb of a regular one). Or it can generate
+other type of links, that will prevent some utilities to work work properly
+(e.g.  "ls" could not list anything).
+
+Moreover, changing the machine, you could experience slowdown in the startup of
+the shell. It is a real problem only in certain cases, as explained in the
+"Speed troubleshot" section.
+
+In any moment you can correct all this issues with the same command used during
+the "Preparation" phase:
+
+```
+> dofix.sh all
+```
+
+This can be annoying. There is a way to avoid at least the busybox link
+problem. You can substitude the busybox.exe with a version with the
+"STANDALONE" flag enabled. Sadly MSYS2 has not a pre-packed binary for this,
+so you have to download the source and compile it. With a MSYS2 system
+installed it is quite simple (just remember to compile in the
+"MSYS dependent gcc mode" and to enable the "STANDALONE" flag). With that
+executable, if you want, you can still correct the slow startup issue using
+`dofix.sh userinfo` instead of `dofix.sh all`.
+
 Adding other MSYS utilities
 ---------------------------
 
@@ -147,7 +164,7 @@ configuration under the same folder hierarchy and the shared library in the
 
 If you want copy some utility that have the same name of one supplied by
 busybox (e.g. grep), you can simply overwrite the link in the /usr/bin
-directory. In case you have to re-run the bblink script as described in the
+directory. In case you have to re-run the dofix script as described in the
 installation section, there should be no problems since it can detect if a
 file is a link or a binary.
 
@@ -160,26 +177,44 @@ problem in case of interactive terminal/shell, but if you have some app
 that start a lot of shell (or busybox applet, like ls, sed, and so on) it can
 became unusable.
 
-The solution should be to run a cygwin application, "cygserver" (
-not present int the binary package), but I prefer a workaround that do not
-need a background demon constantly running. Just click on the 
-regen_user_data.bat script and change in etc/nsswitch.conf the lines:
+The problem is related to the way MSYS will detect users and groups. If it is
+configurated to get it from the system database, with some configuration, it
+must wait some second every time an idendification is requested.
+
+The solution should be to run a cygwin application, "cygserver" ( not
+present int the binary package), but I prefer a workaround that do not need a
+background demon constantly running.
+
+In the /etc/nsswitch.conf file we ask to check some files before ask to
+the system database.
 
 ```
 passwd: files db
 group: files db
 ```
 
-with:
+So we just need to generate the correct files i.e. /etc/passwd and /etc/group.
+To this purpose there is a script you can run:
+
+```
+> dofix.sh userinfo
+```
+
+However these information are machine-dependent so when you move the folder the
+information in the passwd/group file will not match, and so it will fallback to
+the system database. In that case the startup slow-down will be shown again,
+and you need to re-run the `dofix.sh userinfo` script to fix it.
+
+Someone reported that completly disable the database lookup improve startup
+speed. I could not reproduce this behavior, however if you want to try, just
+comment out the "db" in the nsswitch.conf:
 
 ```
 passwd: files # db
 group: files # db
 ```
 
-Note that you have to re-run regen_user_data.bat every time you change the
-machine on which you run this software. It just generate the files
-etc/group and etc/passwd, but they are machine specific. This is also the
-sole purpose of the usr/bin/mkpasswd.exe and usr/bin/mkgroup.exe
-utilities (as well as regen_user_date.bat and usr/bin/regen_user_data.sh).
+But remember that in this case, when you change the machine, the terminal will
+not start at all. You will have to temprorary re-enable the "db", then
+re-run the `dofix.sh userinfo`, then re-disable the "db".
 
