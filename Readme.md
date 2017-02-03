@@ -38,10 +38,12 @@ two reason:
 Preparation
 -----------
 
-Make a folder, give it the name little_unix_for windows (or anything else you
-like). If you have a MSYS2 installation somewhere, you just need to copy the
-following file in the followinf subfolder. Otherwise you need to find them
-separately on the web.
+You have to copy some executable file in the usr/bin subfolder.  If you
+have a MSYS2 installation somewhere, you can find the files in the
+following MSYS2 subfolder, otherwise you have to find them on the web. The
+only one that could miss in a MSYS2 distribution is busybox that is not
+installed by default. You can download and install it with
+`pacman -Su busybox`. The full MSYS2 file list is:
 
 - usr/bin/mkpasswd.exe
 - usr/bin/cygwin-console-helper.exe
@@ -50,21 +52,22 @@ separately on the web.
 - usr/bin/mkgroup.exe
 - usr/bin/busybox.exe
 
-If there is no busybox executable in your MSYS distribution, please install it with
-"pacman -Su busybox".
-
-After that, you need to copy all the content of this repository into the
-little_unix_for_windows folder (if you want you can skip or delete this
-Readme). You have to keep the subfolder structure, e.g. eventually you get the
-file little_unix_for_windows/etc/env .
-
-Finally, you have to generate the links.  Right-click on terminal.bat and
+Then, you have to generate the busybox links.  Right-click on terminal.bat and
 chose "Run as administrator" (that rights are needed to create symbolic
 links in winsows) and run the following command:
 
+```
 > bblink.sh
+```
 
 When it ends, close the admin terminal, you are done.
+
+Distribution
+------------
+
+If you want to make a binary package, you can remove the .git folder the
+.gitignore file and this Readme.md. I suggest you to keep the FIX.txt file or
+integreate it in a your own Readme file.
 
 Note that in some cases windows does not copyng (or extract) correctly the
 symbolic link. It could just duplicate the original file resulting in a larger
@@ -73,8 +76,10 @@ other type of links, that will prevent some utilities to work work properly
 (e.g.  "ls" could not list anything). In any moment you can correct all this
 issues with
 
+```
 > bblink.sh -r
 > bblink.sh
+```
 
 The first just delete all the links or wrong generated file copies.
 
@@ -86,20 +91,28 @@ clicking on teminal.bat in the root directory. Here you can use more or
 less all the typical unix commands (ls, set, etc). There is no manual
 but minimal help can be found with (e.g. for the "ls" command)
 
+```
 > busybox help ls
 > ls --help
+```
 
 If you want to run a sub-shell script, just write:
 
+```
 > ash -l
+```
 
 Or if you want to open another terminal windows:
 
+```
 > mintty ash -l &
+```
 
 Or to run a script:
 
+```
 > ./my_script.sh
+```
 
 This will run the scipt in the terminal. Alternatively you can run through the
 terminal.bat utility simply passing your script path as argument. You can do
@@ -146,13 +159,17 @@ not present int the binary package), but I prefer a workaround that do not
 need a background demon constantly running. Just click on the 
 regen_user_data.bat script and change in etc/nsswitch.conf the lines:
 
+```
 passwd: files db
 group: files db
+```
 
 with:
 
+```
 passwd: files # db
 group: files # db
+```
 
 Note that you have to re-run regen_user_data.bat every time you change the
 machine on which you run this software. It just generate the files
