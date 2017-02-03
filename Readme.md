@@ -8,20 +8,21 @@ for windows.
 What
 ----
 
-Here you will find some config files that you can use to pack a minimal
-unix stack for windows. If you trust running binaries taken form unknown
-sources (you shoud not), I have also a [32-bit
-package](http://pocomane.dynu.net/asset/little_unix_for_windows.7z)
-containing all the software:
+Here you will find some config files that you can use to pack a minimal unix
+stack for windows. The "Preparation" section will show you how to obtain a
+portable distribution of:
 - msys runtime : a library to implement a unix/posix stack in windows
 - mintty : A terminal emulator for windows (with a solarized dark theme :) )
 - busybox : a single binary containing a lot of unix-like utilities 
   (ls, sed, etc)
 
-All the source was obtained from https://github.com/Alexpux/MSYS2-packages.
-Some configuration file from the original distributions were sligthly modified.
-busybox was compiled with the "Standalone Shell" feature that let you to call
-all its applet without creating links or script wrappers.
+If you trust running binaries taken form unknown sources (you shoud not), I
+have also a [32-bit
+package](http://pocomane.dynu.net/asset/little_unix_for_windows.7z). It is
+produced with the addition described in the "Standalone busybox" section,
+resulting in a even more portable distribution.
+
+Original sources were obtained from https://github.com/Alexpux/MSYS2-packages .
 
 Why
 ---
@@ -144,14 +145,24 @@ the "Preparation" phase:
 > dofix.sh all
 ```
 
-This can be annoying. There is a way to avoid at least the busybox link
-problem. You can substitude the busybox.exe with a version with the
+This can be annoying. There is a way to avoid at least the busybox link problem
+described in the "Standalone busybox" section.
+
+Standalone busybox
+------------------
+
+There is a way to avoid the busybox links so you have not to run the dosfix
+script everytimes a wrong copy is made. However, if you want, you can still
+correct the slow startup issue using `dofix.sh userinfo` instead of `dofix.sh
+all`.
+
+The idea is to substitude the busybox.exe with a version with the
 "STANDALONE" flag enabled. Sadly MSYS2 has not a pre-packed binary for this,
 so you have to download the source and compile it. With a MSYS2 system
 installed it is quite simple (just remember to compile in the
-"MSYS dependent gcc mode" and to enable the "STANDALONE" flag). With that
-executable, if you want, you can still correct the slow startup issue using
-`dofix.sh userinfo` instead of `dofix.sh all`.
+"MSYS dependent gcc mode" and to enable the "STANDALONE" flag).
+
+# TODO : ADD BUILD DETAILS
 
 Adding other MSYS utilities
 ---------------------------
