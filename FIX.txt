@@ -8,8 +8,9 @@ can give some trouble e.g.:
 However there is a fix: regenerate all the links. You need to open terminal.bat
 with admin rights and issue the following commands:
 
-bblink.sh -r
-bblink.sh
+```
+dofix.sh link
+```
 
 Note that the installation is fully portable, so you can change the directory
 name, or move somewhere else. But if you duplicate the folder, this issue
