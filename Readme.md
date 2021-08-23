@@ -37,6 +37,20 @@ If you trust running binaries taken form unknown sources (you shoud not), I
 have also a [32-bit
 package](http://pocomane.dynu.net/asset/little_unix_for_windows.7z).
 
+Optional software
+-----------------
+
+Optionally you can add other packages using calling one of the following script
+just after teh `./lufw.sh` step described in the previous section.
+
+- `./add_tmux.sh` will add the `tmux` terminal multiplexer to the system, plus
+  the needed dependencies (msys-event_core and msys-ncursesw6l)
+
+- `./add_kak.sh` will add the `kak` text editor to the system, with the needed
+  dependencies (msys-stdc++-6, msys-gcc_s-seh); morevoer the global configuration
+  file will be created (/usr/share/kak/kakrc), and a shell wrapper will be 
+  generated in /usr/bin/sh (needed by kak to work)
+
 Usage
 -----
 
