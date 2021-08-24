@@ -109,19 +109,24 @@ Why
 ---
 
 In general I think that a proper windows port of busybox (e.g.
-https://github.com/pclouds/busybox-w32) is better for such minimalist systems.
+https://github.com/rmyorston/busybox-w32) is better for such minimalist systems.
 However I had some difficulties using the console/terminal on pre-windows-10
-system, so I started to use mintty. Then, I switched to the msys busybox for
-two reason:
+system, so I started to use mintty. Then, I switched to the msys busybox
+because:
+
 - The system is already dependent on the msys dll due to mintty
+
 - The msys busybox is simpler to compile and keep up-to-date (If you have a
   msys installation somewhere...)
+
+- It is simpler to add some other useful tools, both compiling from source or
+  copying from MSYS system
 
 How it Works
 ------------
 
-The script mainly copy files from the MSYS2 installation. It also install some
-MSYS2 package if missing. The full file list is:
+The main script mainly copy files from the MSYS2 installation. It also install
+some MSYS2 package if missing. The full file list is:
 
 - usr/bin/mkpasswd.exe
 - usr/bin/cygwin-console-helper.exe
@@ -129,7 +134,7 @@ MSYS2 package if missing. The full file list is:
 - usr/bin/mintty.exe
 - usr/bin/mkgroup.exe
 
-The script download and compile busybox also. You can turn-off this
+The main script download and compile busybox also. You can turn-off this
 compilation, in such case the script will just copy the MSYS version of
 busybox:
 
@@ -137,6 +142,20 @@ busybox:
 
 By default, the compiled version will enable the standalone feature of busybox:
 it is the main reason to compile it, as explained in the Issues section.
+
+The `./add_tmux.sh` will copy the following files too from the MSYS system:
+
+- usr/bin/msys-event_core-2-1-7.dll
+- usr/bin/msys-ncursesw6.dll
+- usr/bin/tmux.exe
+
+The `./add_kak.sh` will compile the `kak` from source. The empty file
+`usr/share/kak/kakrc` is created, and a shell wrapper will be generated in
+`usr/bin/sh` (needed by kak to work). The following dependencies will be
+copied from the MSYS system:
+
+- usr/bin/msys-stdc++-6.dll
+- usr/bin/msys-gcc_s-seh-1.dll
 
 Adding other MSYS utilities
 ---------------------------
