@@ -9,6 +9,7 @@ BB_COMPILE_STANDALONE="yes"
 #########################################################################
 
 LUFWDIR="$(readlink -f "$(dirname $0)")"
+LUFWROOT="$LUFWDIR/root"
 BUILDSUBDIR="build"
 BUILDDIR="$LUFWDIR/$BUILDSUBDIR"
 OUTDIR="$BUILDDIR/lufw"
@@ -35,13 +36,7 @@ mkdir -p "$BUILDDIR/"
 mkdir -p "$OUTDIR/"
 cd "$BUILDDIR" ||die
 
-for F in $(ls "$LUFWDIR") ; do
-  if [ "$F" != "$BUILDSUBDIR" ]; then
-    cp -fR "$LUFWDIR"/"$F" "$OUTDIR/" ||die
-  fi
-done
-rm "$OUTDIR"/lufw.sh "$OUTDIR"/Readme.md
-rm "$OUTDIR"/"$(basename "$BB_PATCH_FILE")"
+cp -fR "$LUFWROOT"/* "$OUTDIR"/ ||die
 
 cp /usr/bin/msys-2.0.dll "$OUTDIR"/usr/bin ||die
 cp /usr/bin/cygwin-console-helper.exe "$OUTDIR"/usr/bin ||die

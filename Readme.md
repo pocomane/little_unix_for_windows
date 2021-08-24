@@ -125,8 +125,9 @@ because:
 How it Works
 ------------
 
-The main script mainly copy files from the MSYS2 installation. It also install
-some MSYS2 package if missing. The full file list is:
+The main script first copies the content of the `./root` subfolder in the
+target directory.  Then it install the following file from the MSYS system (it
+also install some package in MSYS if it is missing):
 
 - usr/bin/mkpasswd.exe
 - usr/bin/cygwin-console-helper.exe
@@ -175,9 +176,7 @@ file is a link or a binary.
 Issues
 ======
 
-I suggest you to integrate the FIX.txt file in your distribution. It explains
-how to fix a couple of issue in both packing or moving the directory. In general,
-you can run
+An utility script is included in the target folder. You can run it with:
 
 ```
 > dofix.sh all
