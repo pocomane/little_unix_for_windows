@@ -29,7 +29,8 @@ cd - ||die
 echo "compiling software"
 cd "$BUILDDIR"/kakoune* ||die
 make ||die
-cd -
+strip src/kak ||die
+cd - ||die
 
 echo "copying files"
 mkdir -p "$OUTDIR"/usr/bin/ ||die
